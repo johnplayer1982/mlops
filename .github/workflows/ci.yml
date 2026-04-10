@@ -16,7 +16,7 @@ jobs:
           pip install -r requirements.txt
           pip install pytest
       - name: Train model (smoke)
-        run: python train.py
+        run: python src/train.py
       - name: Run tests
         run: pytest -q
       - name: Build Docker image
