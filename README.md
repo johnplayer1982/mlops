@@ -2,6 +2,8 @@
 
 A repo designed to help me with the transition from DevOps to MLOps.  This is a safe area to make mistakes, misunderstand concepts and ultimately learn.
 
+# Setup
+
 ## Python Setup
 
 - Create python virtual env ``python -m venv .venv``
@@ -11,6 +13,27 @@ A repo designed to help me with the transition from DevOps to MLOps.  This is a 
 ## Precommit Setup (Secret scanning)
 
 - Install precommit with ``pre-commit install`` for pre-commit secrets scanning
+
+## Create ACR
+
+Create a container registry in Azure to store the docker images.
+
+- Using powershell run ``.\scripts\create-acr.ps1`` which will return the ACR credentials:
+
+```
+{
+  "loginServer": <ACR_LOGIN_SERVER>,
+  "password": "<ACR_PASS>",
+  "username": "<ACR_USERNAME>"
+}
+```
+
+Be aware that the login server may be returned as 'null', as still being created when the command finishes.
+
+Create 3 secrets in GitHub:  
+1. ACR_PASSWORD
+2. ACR_LOGIN_SERVER
+3. ACR_USERNAME
 
 ## Running
 

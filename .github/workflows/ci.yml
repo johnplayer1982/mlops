@@ -21,3 +21,12 @@ jobs:
         run: pytest -q
       - name: Build Docker image
         run: docker build -t my-ml-app:latest .
+
+      - name: Log in to Azure Container Registry
+        run: echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
+
+      - name: Tag Docker image for ACR
+        run: docker tag my-ml-app:latest ${{ secrets.ACR_LOGIN_SERVER }}/my-ml-app:latest
+
+      - name: Push Docker image to ACR
+        run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-ml-app:latest
