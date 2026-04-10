@@ -8,6 +8,10 @@ A repo designed to help me with the transition from DevOps to MLOps.  This is a 
 - Initialise venv ``.venv\Scripts\activate``
 - Install packages ``pip install -r requirements.txt``
 
+## Precommit Setup (Secret scanning)
+
+- Install precommit with ``pre-commit install`` for pre-commit secrets scanning
+
 ## Running
 
 ### Local Machine
