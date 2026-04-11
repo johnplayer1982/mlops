@@ -14,33 +14,49 @@ A repo designed to help me with the transition from DevOps to MLOps.  This is a 
 
 - Install precommit with ``pre-commit install`` for pre-commit secrets scanning
 
-## Create ACR
+## Create Azure Infra
 
-Create a container registry in Azure to store the docker images.
+Create the storge account for tfstate:
 
-- Using powershell run ``.\scripts\create-acr.ps1`` which will return the ACR credentials:
+Powershell:
+```
+.\scripts\create-tf-backend.ps1
+```
+
+You'll need the output:
+```
+Storage Account: mytfstate6692
+Container: tfstate
+Resource Group: my-tfstate-rg
+```
+
+The ACR (Azure Container Registry) and ACA (Azure Container App) are created via terraform (/.terraform/) to run (make sure terraform is installed):
+
+- cd into the terraform dir ``cd .terraform``
+- Initialise backend ``terraform init``
+- Plan ``terraform plan -out tfplan``
+- Apply ``terraform apply tfplan``
+
+Notes:  
+The ACA has a placeholder default image:
 
 ```
-{
-  "loginServer": <ACR_LOGIN_SERVER>,
-  "password": "<ACR_PASS>",
-  "username": "<ACR_USERNAME>"
+container {
+  name   = var.aca_name
+  image  = "placeholder"
+  cpu    = 0.5
+  memory = "1.0Gi"
 }
 ```
 
-Be aware that the login server may be returned as 'null', as still being created when the command finishes.
+As an image wont exist when the infrastructure is created, this will be updated during the CI workflow.  
 
-Create 3 secrets in GitHub:
+TODO - Create 3 secrets in GitHub:
 
 1. ACR_PASSWORD
 2. ACR_LOGIN_SERVER
 3. ACR_USERNAME
 
-## Create Container App (ACA)
-
-Create the container app to mount the docker image.  
-
-- Run ``.\scripts\create-container-app.ps1 -AcrName "<ACR_NAME>" -AcrUsername "<ACR_USERNAME>" -AcrPassword "<ACR_PASSWORD>"``
 
 # Running
 
