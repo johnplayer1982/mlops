@@ -1,6 +1,6 @@
 [allowlist]
-description = "Allow Terraform secret variable names"
-regexes = [
-  "acr_secret",
-  "password_secret_name"
-]
+  description = "Allow Terraform secret variable names"
+  regexes = [
+    "acr_secret",
+    "password_secret_name"
+  ]
