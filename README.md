@@ -23,7 +23,7 @@ Powershell:
 .\scripts\create-tf-backend.ps1
 ```
 
-You'll need the output:
+You'll need the output for the terraform backend, eg:
 ```
 Storage Account: mytfstate6692
 Container: tfstate
@@ -37,26 +37,18 @@ The ACR (Azure Container Registry) and ACA (Azure Container App) are created via
 - Plan ``terraform plan -out tfplan``
 - Apply ``terraform apply tfplan``
 
-Notes:  
-The ACA has a placeholder default image:
+As an image wont exist when the infrastructure is created, the terraform uses a public image for inital ACA setup which will be updated during the CI process.
 
-```
-container {
-  name   = var.aca_name
-  image  = "placeholder"
-  cpu    = 0.5
-  memory = "1.0Gi"
-}
-```
+## GiHub Env Secrets for ACR
 
-As an image wont exist when the infrastructure is created, this will be updated during the CI workflow.  
+Get the ACR login server, username and password and create/update the secrets in GitHub for deployments:
 
-TODO - Create 3 secrets in GitHub:
-
-1. ACR_PASSWORD
-2. ACR_LOGIN_SERVER
-3. ACR_USERNAME
-
+- ACR_LOGIN_SERVER  
+``az acr show --name mymlopsacr12345 --query "loginServer" --output tsv``
+- ACR_USERNAME  
+``az acr credential show --name mymlopsacr12345 --query "username" --output tsv``
+- ACR_PASSWORD  
+``az acr credential show --name mymlopsacr12345 --query "passwords[0].value" --output tsv``
 
 # Running
 

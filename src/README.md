@@ -20,4 +20,3 @@ The app.py file creates a simple web API using FastAPI to serve predictions from
 - When a request is made to /predict, it uses the loaded model to predict the class for the provided features and returns the prediction as JSON.
 
 In summary, app.py is an API server for making predictions with your trained model.
-

@@ -13,7 +13,7 @@ resource "azurerm_container_app" "aca" {
   template {
     container {
       name   = var.aca_name
-      image  = "placeholder"
+      image = "nginx:latest"
       cpu    = 0.5
       memory = "1.0Gi"
     }
@@ -31,11 +31,11 @@ resource "azurerm_container_app" "aca" {
   registry {
     server   = azurerm_container_registry.acr.login_server
     username = azurerm_container_registry.acr.admin_username
-    password_secret_name = "acr_secret"
+    password_secret_name = "acr-secret"
   }
 
   secret {
-    name  = "acr_secret"
+    name  = "acr-secret"
     value = azurerm_container_registry.acr.admin_password
   }
 
