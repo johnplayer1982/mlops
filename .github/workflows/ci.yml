@@ -30,3 +30,11 @@ jobs:
 
       - name: Push Docker image to ACR
         run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/my-ml-app:latest
+
+      # - name: Update Azure Container App with new image
+      #   run: |
+      #     az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+      #     az containerapp update \
+      #       --name ${{ secrets.ACA_NAME }} \
+      #       --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+      #       --image ${{ secrets.ACR_LOGIN_SERVER }}/my-ml-app:latest

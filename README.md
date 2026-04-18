@@ -23,17 +23,20 @@ Powershell:
 .\scripts\create-tf-backend.ps1
 ```
 
-You'll need the output for the terraform backend, eg:
+You'll need the output for the terraform backend (main.tf), eg:
 ```
-Storage Account: mytfstate6692
-Container: tfstate
-Resource Group: my-tfstate-rg
+  backend "azurerm" {
+    resource_group_name  = "my-tfstate-rg"
+    storage_account_name = "mytfstate105"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+  }
 ```
 
 The ACR (Azure Container Registry) and ACA (Azure Container App) are created via terraform (/.terraform/) to run (make sure terraform is installed):
 
 - cd into the terraform dir ``cd .terraform``
-- Initialise backend ``terraform init``
+- Initialise backend ``terraform init`` (if you get the ``Error: Backend configuration changed`` error, delete .terraform/tfplan and .terraform/.terraform)
 - Plan ``terraform plan -out tfplan``
 - Apply ``terraform apply tfplan``
 
